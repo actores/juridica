@@ -6,6 +6,7 @@ use App\Models\Contrato;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -26,7 +27,11 @@ class ConfirmacionSolicitudMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'RADICACIÓN EXITOSA: ' . $this->contrato->consecutivo,
+            from: new Address('noresponder@actores.tech', 'Área Jurídica — Actores S.C.G.'),
+            subject: 'Radicado ' . $this->contrato->consecutivo . ' | Contrato ' . $this->contrato->nombre_razon . ' — Solicitud recibida',
+            replyTo: [
+                new Address('juridica@actores.org.co', 'Área Jurídica — Actores S.C.G.'),
+            ],
         );
     }
 

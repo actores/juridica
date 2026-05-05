@@ -50,6 +50,7 @@ return new class extends Migration
 
             // ROLES Y SUPERVISIÓN
             $table->string('publico')->nullable();
+            $table->integer('numero_personas')->nullable();
             $table->string('supervisor')->nullable();
 
             // DATOS FINANCIEROS

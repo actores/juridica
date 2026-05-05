@@ -1,53 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;900&display=swap');
-        body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: 'Inter', sans-serif; }
-        .main-card { max-width: 600px; margin: 40px auto; background-color: #000000; border: 1px solid #1a1a1a; overflow: hidden; }
-        .header { background-color: #2563eb; padding: 40px 20px; text-align: center; }
-        .content { padding: 50px 40px; text-align: center; color: #ffffff; }
-        .font-bebas { font-family: 'Bebas Neue', sans-serif; text-transform: uppercase; }
-        .status-tag { font-size: 10px; font-weight: 900; color: #2563eb; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .radicado-box { background-color: #080808; border: 2px dashed #333; padding: 30px 20px; margin: 30px 0; }
-        .footer { padding: 30px; text-align: center; background-color: #000; border-top: 1px solid #1a1a1a; }
-        .legal { font-size: 9px; color: #ffffff; opacity: 0.4; letter-spacing: 2px; text-transform: uppercase; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    <div class="main-card">
-        <div class="header">
-            <div style="font-size: 10px; font-weight: 800; letter-spacing: 5px; color: #000; margin-bottom: 15px;">ACTORES S.C.G.</div>
-            <h1 class="font-bebas" style="font-size: 50px; color: #000; margin: 0; line-height: 0.9;">Solicitud<br><span style="color: #fff;">Procesada</span></h1>
-        </div>
+<body style="margin:0;padding:0;background-color:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr><td align="center" style="padding:40px 20px;">
+    <table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e0e0e0;">
 
-        <div class="content">
-            <span class="status-tag">Confirmación de Radicado</span>
-            <h2 class="font-bebas" style="font-size: 32px; margin-bottom: 10px;">Hola, {{ explode(' ', $user->name)[0] }}</h2>
-            
-            <p style="font-size: 13px; color: #888; line-height: 1.8; text-transform: uppercase; letter-spacing: 1px;">
-                Tu requerimiento para la creación del contrato a nombre de 
-                <span style="color: #fff; font-weight: 900;">"{{ $contrato->nombre_razon }}"</span> 
-                ha sido recibido por el departamento jurídico.
-            </p>
+      <tr><td style="background:#1a3a5c;padding:28px 36px;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:3px;background:rgba(255,255,255,0.3);padding:0;">&nbsp;</td>
+          <td style="padding-left:16px;">
+            <div style="color:rgba(255,255,255,0.6);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Actores S.C.G.</div>
+            <div style="color:#ffffff;font-size:15px;">Área Jurídica</div>
+          </td>
+        </tr></table>
+      </td></tr>
 
-            <div class="radicado-box">
-                <span class="status-tag" style="margin-bottom: 5px;">Tu número de radicado es:</span>
-                <div class="font-bebas" style="font-size: 45px; color: #ffffff; letter-spacing: 3px;">{{ $contrato->consecutivo }}</div>
-            </div>
+      <tr><td style="padding:36px 36px 0;">
+        <p style="font-size:11px;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 6px;">Confirmación de radicado</p>
+        <h2 style="font-size:20px;font-weight:normal;color:#1a1a1a;margin:0 0 20px;">Su solicitud ha sido recibida</h2>
+        <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 24px;">
+          Estimado/a <strong style="color:#1a1a1a;">{{ explode(' ', $user->name)[0] }}</strong>,<br><br>
+          Le informamos que el requerimiento de elaboración de contrato a nombre de
+          <strong style="color:#1a1a1a;">{{ $contrato->nombre_razon }}</strong>
+          ha sido recibido correctamente por el área jurídica y se encuentra en proceso de revisión.
+        </p>
+      </td></tr>
 
-            <p style="font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px;">
-                El equipo revisará los soportes técnicos y legales. <br>Recibirás una notificación cuando el contrato esté listo para firma.
-            </p>
-        </div>
+      <tr><td style="padding:0 36px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f7;border:1px solid #e0e0e0;">
+          <tr><td style="padding:20px 24px;">
+            <p style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;">Número de radicado</p>
+            <p style="font-size:22px;color:#1a1a1a;font-family:monospace;margin:0;">{{ $contrato->consecutivo }}</p>
+          </td></tr>
+        </table>
+      </td></tr>
 
-        <div class="footer">
-            <div class="legal">
-                SISTEMA DE GESTIÓN DE CONTRATOS ACTORES S.C.G.<br>
-                ESTE ES UN MENSAJE AUTOMÁTICO • NO RESPONDER
-            </div>
-        </div>
-    </div>
+      <tr><td style="padding:0 36px 28px;">
+        <p style="font-size:13px;color:#555;line-height:1.7;margin:0 0 16px;">
+          El equipo jurídico procederá a verificar la documentación adjunta y los soportes técnicos requeridos. Será notificado oportunamente cuando el contrato se encuentre listo para firma.
+        </p>
+        <p style="font-size:13px;color:#555;line-height:1.7;margin:0;">
+          Si requiere información adicional sobre el estado de su solicitud, comuníquese directamente con el área jurídica.
+        </p>
+      </td></tr>
+
+      <tr><td style="padding:0 36px 36px;border-top:1px solid #e0e0e0;">
+        <p style="font-size:13px;color:#555;margin:20px 0 4px;">Cordialmente,</p>
+        <p style="font-size:13px;color:#1a1a1a;margin:0;">Área Jurídica</p>
+        <p style="font-size:12px;color:#888;margin:0;">Actores S.C.G.</p>
+      </td></tr>
+
+      <tr><td style="background:#f7f7f7;border-top:1px solid #e0e0e0;padding:14px 36px;">
+        <table width="100%"><tr>
+          <td style="font-size:11px;color:#aaa;">Sistema de Gestión de Contratos</td>
+          <td align="right" style="font-size:11px;color:#aaa;">Notificación automática — No responder</td>
+        </tr></table>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
 </body>
 </html>

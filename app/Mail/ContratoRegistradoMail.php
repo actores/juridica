@@ -5,9 +5,12 @@ namespace App\Mail;
 use App\Models\Contrato;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Mail\Mailables\Attachment;
 
 class ContratoRegistradoMail extends Mailable
 {
@@ -22,26 +25,44 @@ class ContratoRegistradoMail extends Mailable
         $this->wordPath = $wordPath;
     }
 
-    public function build()
+    public function envelope(): Envelope
     {
-        $email = $this->subject("Nuevo Registro de Contrato: {$this->contrato->consecutivo}")
-                     ->view('emails.contrato_registrado');
+        return new Envelope(
+            from: new Address('noresponder@actores.tech', 'Área Jurídica — Actores S.C.G.'),
+            subject: 'Nuevo contrato | ' . $this->contrato->consecutivo . ' — ' . $this->contrato->nombre_razon,
+            replyTo: [
+                new Address($this->contrato->email, $this->contrato->nombre_razon),
+            ],
+        );
+    }
 
-        // 1. Adjuntar el Word generado
-        $email->attach($this->wordPath, [
-            'as' => "Contrato_{$this->contrato->consecutivo}.docx",
-            'mime' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        ]);
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.contrato_registrado',
+        );
+    }
 
-        // 2. Adjuntar los PDFs que subió el usuario
+    public function attachments(): array
+    {
+        $adjuntos = [];
+
+        // 1. Word generado
+        $adjuntos[] = Attachment::fromPath($this->wordPath)
+            ->as("Contrato_{$this->contrato->consecutivo}.docx")
+            ->withMime('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+
+        // 2. PDFs subidos por el usuario
         if ($this->contrato->rutas_documentos) {
             foreach ($this->contrato->rutas_documentos as $tipo => $ruta) {
                 if (Storage::disk('public')->exists($ruta)) {
-                    $email->attachFromStorageDisk('public', $ruta, "Soporte_{$tipo}.pdf");
+                    $adjuntos[] = Attachment::fromStorageDisk('public', $ruta)
+                        ->as("Soporte_{$tipo}.pdf")
+                        ->withMime('application/pdf');
                 }
             }
         }
 
-        return $email;
+        return $adjuntos;
     }
 }

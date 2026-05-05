@@ -6,9 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Jurídica') }}</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+    <link rel="shortcut icon" href="https://actores.org.co/favicon.ico" type="image/x-icon">
     <style>
         body { font-family: 'Montserrat', sans-serif; }
         .fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -53,7 +53,7 @@
                 <div class="absolute bottom-6 lg:bottom-12 left-0 w-full px-8 sm:px-16 lg:px-24 pointer-events-none">
                     <div class="flex items-center gap-4 pt-6 border-t border-gray-100/50">
                         <div class="flex-1">
-                            <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed">Dirección Ejecutiva, Financiera y Distribución</p>
+                            <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed">Dirección Jurídica</p>
                             <p class="text-[8px] text-gray-300 font-semibold mt-1">Actores Sociedad Colombiana de Gestión © {{ date('Y') }}</p>
                         </div>
                     </div>

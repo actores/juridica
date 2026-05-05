@@ -35,6 +35,7 @@ class Contrato extends Model
         'nombre_ejecutor',       // Agregado
         'id_ejecutor',           // Agregado
         'publico',
+        'numero_personas',
         'supervisor',
         'valor_total',
         'forma_pago',            // Agregado

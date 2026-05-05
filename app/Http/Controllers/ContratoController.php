@@ -70,7 +70,7 @@ class ContratoController extends Controller
             'fecha_de_terminacion'        => 'required|date|after_or_equal:fecha_de_inicio',
             'duracion_total_del_contrato' => 'nullable|string|max:100',
             'publico_al_cual_se_dirige'   => 'required|string',
-
+            'numero_personas'             => 'required|integer|min:0',
             'intuitu_personae'            => 'required|string',
             'nombre_ejecutor'             => 'nullable|required_if:intuitu_personae,Sí|string',
             'id_ejecutor'                 => 'nullable|required_if:intuitu_personae,Sí|string',
@@ -113,6 +113,7 @@ class ContratoController extends Controller
             $contrato->fecha_fin         = $validatedData['fecha_de_terminacion'];
             $contrato->duracion          = $validatedData['duracion_total_del_contrato'];
             $contrato->publico           = $validatedData['publico_al_cual_se_dirige'];
+            $contrato->numero_personas   = $validatedData['numero_personas'];
             $contrato->supervisor        = $validatedData['supervisor_del_contrato'];
 
             // --- INTUITU PERSONAE ---
@@ -152,7 +153,7 @@ class ContratoController extends Controller
 
             // --- ENVÍO DE EMAIL ---
             // Reemplaza con el correo de la oficina jurídica o administrativa
-            $emailDestino = 'nhernandez@actores.org.co';
+            $emailDestino = 'juridica@actores.org.co';
 
             Mail::to($emailDestino)->send(new \App\Mail\ContratoRegistradoMail($contrato, $wordPath));
 

@@ -3,7 +3,9 @@
 use App\Http\Controllers\ContratoController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

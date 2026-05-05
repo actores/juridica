@@ -1,251 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notificación de Contrato - Actores S.C.G.</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap');
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f7;
-            font-family: 'Inter', Helvetica, Arial, sans-serif;
-            color: #ffffff;
-        }
-
-        .wrapper {
-            width: 100%;
-            table-layout: fixed;
-            background-color: #f4f4f7;
-            padding-bottom: 60px;
-        }
-
-        .main-card {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #000000;
-            border: 1px solid #1a1a1a;
-            overflow: hidden;
-            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.3);
-        }
-
-        .industrial-header {
-            background-color: #2563eb; /* Azul Principal */
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 15px solid #000000;
-            position: relative;
-        }
-
-        .hud-tag {
-            display: inline-block;
-            background-color: #000000;
-            color: #ffffff;
-            font-family: monospace;
-            font-size: 10px;
-            padding: 5px 15px;
-            letter-spacing: 4px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .font-bebas {
-            font-family: 'Bebas Neue', 'Arial Black', sans-serif;
-        }
-
-        .main-title {
-            font-size: 60px;
-            line-height: 0.85;
-            color: #000000;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-
-        .content {
-            padding: 50px 40px;
-            text-align: center;
-        }
-
-        .welcome-tag {
-            font-size: 12px;
-            color: #2563eb;
-            font-weight: 900;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .info-text {
-            font-size: 13px;
-            line-height: 1.8;
-            color: #888888;
-            margin-bottom: 35px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .data-highlight {
-            color: #ffffff;
-            font-weight: 900;
-            border-bottom: 2px solid #2563eb;
-        }
-
-        .radicado-box {
-            background-color: #080808;
-            border: 2px dashed #333;
-            padding: 30px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .radicado-label {
-            font-size: 10px;
-            font-weight: 900;
-            color: #2563eb;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .radicado-code {
-            font-size: 42px;
-            color: #ffffff;
-            letter-spacing: 4px;
-            line-height: 1;
-            text-transform: uppercase;
-        }
-
-        .specs-container {
-            text-align: left;
-            background-color: #111;
-            padding: 25px;
-            border-left: 4px solid #2563eb;
-            margin-bottom: 40px;
-        }
-
-        .spec-item {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: #aaa;
-        }
-
-        .spec-value {
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .action-container {
-            background-color: #ffffff;
-            padding: 60px 30px;
-            text-align: center;
-        }
-
-        .btn-industrial {
-            background-color: #000000;
-            color: #ffffff !important;
-            padding: 20px 35px;
-            text-decoration: none;
-            font-size: 22px;
-            letter-spacing: 2px;
-            display: inline-block;
-            border: 4px solid #000000;
-            box-shadow: 8px 8px 0px #2563eb;
-            text-transform: uppercase;
-        }
-
-        .footer {
-            padding: 50px 20px;
-            text-align: center;
-            background-color: #000000;
-        }
-
-        .footer-legal {
-            font-size: 9px;
-            color: #ffffff;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            line-height: 2;
-            opacity: 0.5;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<body style="margin:0;padding:0;background-color:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr><td align="center" style="padding:40px 20px;">
+    <table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e0e0e0;">
 
-<body>
-    <div class="wrapper">
-        <div class="main-card">
-            {{-- Header Branding --}}
-            <div style="background-color: #000; padding: 40px 0 30px 0; border-bottom: 1px solid #1a1a1a; text-align: center;">
-                <div style="color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px;">
-                    ACTORES S.C.G. | GESTIÓN JURÍDICA
-                </div>
-            </div>
+      <tr><td style="background:#1a3a5c;padding:28px 36px;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:3px;background:rgba(255,255,255,0.3);padding:0;">&nbsp;</td>
+          <td style="padding-left:16px;">
+            <div style="color:rgba(255,255,255,0.6);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Actores S.C.G.</div>
+            <div style="color:#ffffff;font-size:15px;">Sistema de Gestión de Contratos</div>
+          </td>
+        </tr></table>
+      </td></tr>
 
-            {{-- Main Industrial Header --}}
-            <div class="industrial-header">
-                <div class="hud-tag"><span style="color: #ffffff;">●</span> SYSTEM_CORE</div>
-                <h1 class="font-bebas main-title">
-                    CONTRATO<br><span style="color: #ffffff; letter-spacing: 3px;">REGISTRADO</span>
-                </h1>
-                <div style="font-size: 10px; color: #000; letter-spacing: 6px; margin-top: 20px; font-weight: 900; text-transform: uppercase; opacity: 0.8;">
-                    NUEVA SOLICITUD GENERADA
-                </div>
-            </div>
+      <tr><td style="padding:36px 36px 0;">
+        <p style="font-size:11px;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 6px;">Nuevo registro</p>
+        <h2 style="font-size:20px;font-weight:normal;color:#1a1a1a;margin:0 0 20px;">Contrato pendiente de revisión</h2>
+        <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 24px;">
+          Se ha registrado una nueva solicitud de elaboración de contrato en el sistema. A continuación se relacionan los datos del expediente para su gestión.
+        </p>
+      </td></tr>
 
-            <div class="content">
-                <div class="welcome-tag font-bebas">SISTEMA DE RADICACIÓN</div>
-                <div class="font-bebas" style="font-size: 32px; color: white; margin-bottom: 25px;">CONTROL DE EXPEDIENTES</div>
+      <tr><td style="padding:0 36px 24px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0e0e0;">
+          <tr><td style="background:#f7f7f7;padding:10px 16px;border-bottom:1px solid #e0e0e0;">
+            <span style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Datos del expediente</span>
+          </td></tr>
+          <tr style="border-bottom:1px solid #e0e0e0;">
+            <td style="padding:12px 16px;color:#888;font-size:13px;width:40%;border-bottom:1px solid #e0e0e0;">Consecutivo</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;font-family:monospace;border-bottom:1px solid #e0e0e0;">{{ $contrato->consecutivo }}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;color:#888;font-size:13px;border-bottom:1px solid #e0e0e0;">Contratista</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;font-weight:bold;border-bottom:1px solid #e0e0e0;">{{ $contrato->nombre_razon }}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;color:#888;font-size:13px;border-bottom:1px solid #e0e0e0;">Identificación</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;border-bottom:1px solid #e0e0e0;">{{ $contrato->tipo_id }} {{ $contrato->id_nit }}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;color:#888;font-size:13px;border-bottom:1px solid #e0e0e0;">Valor del contrato</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;font-weight:bold;border-bottom:1px solid #e0e0e0;">${{ number_format($contrato->valor_total, 2) }}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;color:#888;font-size:13px;border-bottom:1px solid #e0e0e0;">Vigencia</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;border-bottom:1px solid #e0e0e0;">{{ $contrato->fecha_inicio->format('d/m/Y') }} — {{ $contrato->fecha_fin->format('d/m/Y') }}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;color:#888;font-size:13px;vertical-align:top;">Objeto</td>
+            <td style="padding:12px 16px;color:#1a1a1a;font-size:13px;line-height:1.6;">{{ $contrato->objeto }}</td>
+          </tr>
+        </table>
+      </td></tr>
 
-                <p class="info-text">
-                    SE HA FORMALIZADO EL REGISTRO DE UN NUEVO DOCUMENTO EN EL SISTEMA MAESTRO. 
-                    POR FAVOR, REVISE LOS ADJUNTOS PARA VALIDACIÓN TÉCNICA.
-                </p>
+      <tr><td style="padding:0 36px 28px;">
+        <p style="font-size:13px;color:#555;line-height:1.7;margin:0;">
+          Se adjunta a este correo el borrador del contrato en formato Word para su revisión. Por favor, verifique que la información sea correcta y proceda con los pasos establecidos en el protocolo interno.
+        </p>
+      </td></tr>
 
-                {{-- Consecutivo Box --}}
-                <div class="radicado-box">
-                    <span class="radicado-label">CONSECUTIVO DE RADICADO</span>
-                    <div class="font-bebas radicado-code">{{ $contrato->consecutivo }}</div>
-                </div>
+      <tr><td style="padding:0 36px 36px;border-top:1px solid #e0e0e0;">
+        <p style="font-size:13px;color:#555;margin:20px 0 4px;">Generado automáticamente por el</p>
+        <p style="font-size:13px;color:#1a1a1a;margin:0;">Sistema de Gestión de Contratos</p>
+        <p style="font-size:12px;color:#888;margin:0;">Actores S.C.G.</p>
+      </td></tr>
 
-                {{-- Especificaciones Técnicas --}}
-                <div class="specs-container font-bebas">
-                    <div class="spec-item">Contratista: <span class="spec-value">{{ mb_strtoupper($contrato->nombre_razon) }}</span></div>
-                    <div class="spec-item">Valor Total: <span class="spec-value">${{ number_format($contrato->valor_total, 2) }}</span></div>
-                    <div class="spec-item" style="margin-bottom: 0;">Objeto: <span class="spec-value" style="font-family: 'Inter', sans-serif; font-size: 10px;">{{ $contrato->objeto }}</span></div>
-                </div>
+      <tr><td style="background:#f7f7f7;border-top:1px solid #e0e0e0;padding:14px 36px;">
+        <table width="100%"><tr>
+          <td style="font-size:11px;color:#aaa;">Sistema de Gestión de Contratos</td>
+          <td align="right" style="font-size:11px;color:#aaa;">Notificación automática — No responder</td>
+        </tr></table>
+      </td></tr>
 
-                <div class="action-container">
-                    <div class="font-bebas" style="font-size: 24px; color: #000; margin-bottom: 20px; text-transform: uppercase;">Acceso a la Consola de Gestión</div>
-
-                    <a href="{{ route('dashboard') }}" class="font-bebas btn-industrial">
-                        GESTIONAR CONTRATO →
-                    </a>
-
-                    <div style="margin-top: 40px;">
-                        <p style="color: #666; font-size: 10px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px;">
-                            Encuentre adjunto el borrador en Word<br>y los soportes legales en PDF.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Footer --}}
-            <div class="footer">
-                <div class="footer-legal">
-                    ACTORES S.C.G. | SOCIEDAD COLOMBIANA DE GESTIÓN<br>
-                    DEPARTAMENTO DE TECNOLOGÍA Y SISTEMAS<br>
-                    <span style="color: #2563eb; display: block; margin-top: 15px; font-weight: bold;">NOTIFICACIÓN AUTOMÁTICA • NO RESPONDER</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    </table>
+  </td></tr>
+</table>
 </body>
-
 </html>
