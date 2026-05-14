@@ -155,11 +155,11 @@ class ContratoController extends Controller
             // Reemplaza con el correo de la oficina jurídica o administrativa
             $emailDestino = 'juridica@actores.org.co';
 
-            Mail::to($emailDestino)->send(new \App\Mail\ContratoRegistradoMail($contrato, $wordPath));
+            // Mail::to($emailDestino)->send(new \App\Mail\ContratoRegistradoMail($contrato, $wordPath));
 
             $user = Auth::user();
 
-            Mail::to($user->email)->send(new \App\Mail\ConfirmacionSolicitudMail($contrato, $user));
+            // Mail::to($user->email)->send(new \App\Mail\ConfirmacionSolicitudMail($contrato, $user));
 
             // --- LIMPIEZA ---
             // Borramos el Word temporal después del envío para no acumular basura
@@ -177,6 +177,218 @@ class ContratoController extends Controller
         }
     }
 
+    /**
+     * Convierte un número entero a su forma escrita en español (0-9999).
+     * Pensado para días (1-31) y años (ej. 2026).
+     */
+    private function numeroALetras(int $numero): string
+    {
+        if ($numero === 0) return 'cero';
+
+        $unidades = [
+            1 => 'uno',
+            2 => 'dos',
+            3 => 'tres',
+            4 => 'cuatro',
+            5 => 'cinco',
+            6 => 'seis',
+            7 => 'siete',
+            8 => 'ocho',
+            9 => 'nueve',
+            10 => 'diez',
+            11 => 'once',
+            12 => 'doce',
+            13 => 'trece',
+            14 => 'catorce',
+            15 => 'quince',
+            16 => 'dieciséis',
+            17 => 'diecisiete',
+            18 => 'dieciocho',
+            19 => 'diecinueve',
+            20 => 'veinte',
+            21 => 'veintiuno',
+            22 => 'veintidós',
+            23 => 'veintitrés',
+            24 => 'veinticuatro',
+            25 => 'veinticinco',
+            26 => 'veintiséis',
+            27 => 'veintisiete',
+            28 => 'veintiocho',
+            29 => 'veintinueve',
+            30 => 'treinta',
+        ];
+
+        $decenas = [
+            3 => 'treinta',
+            4 => 'cuarenta',
+            5 => 'cincuenta',
+            6 => 'sesenta',
+            7 => 'setenta',
+            8 => 'ochenta',
+            9 => 'noventa',
+        ];
+
+        $centenas = [
+            1 => 'ciento',
+            2 => 'doscientos',
+            3 => 'trescientos',
+            4 => 'cuatrocientos',
+            5 => 'quinientos',
+            6 => 'seiscientos',
+            7 => 'setecientos',
+            8 => 'ochocientos',
+            9 => 'novecientos',
+        ];
+
+        // 1 - 30
+        if ($numero <= 30) {
+            return $unidades[$numero];
+        }
+
+        // 31 - 99
+        if ($numero < 100) {
+            $d = intdiv($numero, 10);
+            $u = $numero % 10;
+            return $u === 0 ? $decenas[$d] : $decenas[$d] . ' y ' . $unidades[$u];
+        }
+
+        // 100
+        if ($numero === 100) return 'cien';
+
+        // 101 - 999
+        if ($numero < 1000) {
+            $c = intdiv($numero, 100);
+            $resto = $numero % 100;
+            return $resto === 0 ? $centenas[$c] : $centenas[$c] . ' ' . $this->numeroALetras($resto);
+        }
+
+        // 1000 - 9999 (suficiente para años)
+        if ($numero < 10000) {
+            $miles = intdiv($numero, 1000);
+            $resto = $numero % 1000;
+            $prefijo = $miles === 1 ? 'mil' : $this->numeroALetras($miles) . ' mil';
+            return $resto === 0 ? $prefijo : $prefijo . ' ' . $this->numeroALetras($resto);
+        }
+
+        return (string) $numero; // fallback
+    }
+
+    /**
+     * Genera el texto formal del período de ejecución del contrato.
+     * Reglas:
+     * - Un solo día: "el día veintinueve (29) de mayo de dos mil veintiséis (2026)"
+     * - Mismo mes y año: "desde el día X hasta el Y de MES de AÑO"
+     * - Distinto mes, mismo año: "desde el día X de MES_A hasta el Y de MES_B de AÑO"
+     * - Distinto año: "desde el día X de MES_A de AÑO_A hasta el Y de MES_B de AÑO_B"
+     */
+    private function generarTextoPeriodo($fechaInicio, $fechaFin): string
+    {
+        $meses = [
+            1 => 'enero',
+            2 => 'febrero',
+            3 => 'marzo',
+            4 => 'abril',
+            5 => 'mayo',
+            6 => 'junio',
+            7 => 'julio',
+            8 => 'agosto',
+            9 => 'septiembre',
+            10 => 'octubre',
+            11 => 'noviembre',
+            12 => 'diciembre',
+        ];
+
+        // Aseguramos instancias Carbon
+        $inicio = \Carbon\Carbon::parse($fechaInicio);
+        $fin    = \Carbon\Carbon::parse($fechaFin);
+
+        $diaIni  = (int) $inicio->day;
+        $mesIni  = (int) $inicio->month;
+        $anioIni = (int) $inicio->year;
+
+        $diaFin  = (int) $fin->day;
+        $mesFin  = (int) $fin->month;
+        $anioFin = (int) $fin->year;
+
+        $diaIniTxt  = $this->numeroALetras($diaIni)  . " ({$diaIni})";
+        $diaFinTxt  = $this->numeroALetras($diaFin)  . " ({$diaFin})";
+        $anioIniTxt = $this->numeroALetras($anioIni) . " ({$anioIni})";
+        $anioFinTxt = $this->numeroALetras($anioFin) . " ({$anioFin})";
+
+        // Caso 1: mismo día
+        if ($inicio->isSameDay($fin)) {
+            return "el día {$diaIniTxt} de {$meses[$mesIni]} de {$anioIniTxt}";
+        }
+
+        // Caso 2: mismo mes y mismo año
+        if ($mesIni === $mesFin && $anioIni === $anioFin) {
+            return "desde el día {$diaIniTxt} hasta el {$diaFinTxt} de {$meses[$mesIni]} de {$anioIniTxt}";
+        }
+
+        // Caso 3: distinto mes, mismo año
+        if ($anioIni === $anioFin) {
+            return "desde el día {$diaIniTxt} de {$meses[$mesIni]} hasta el {$diaFinTxt} de {$meses[$mesFin]} de {$anioIniTxt}";
+        }
+
+        // Caso 4: distinto año
+        return "desde el día {$diaIniTxt} de {$meses[$mesIni]} de {$anioIniTxt} hasta el {$diaFinTxt} de {$meses[$mesFin]} de {$anioFinTxt}";
+    }
+
+    private function generarTextoDuracion($fechaInicio, $fechaFin): string
+    {
+        $meses = [
+            1 => 'enero',
+            2 => 'febrero',
+            3 => 'marzo',
+            4 => 'abril',
+            5 => 'mayo',
+            6 => 'junio',
+            7 => 'julio',
+            8 => 'agosto',
+            9 => 'septiembre',
+            10 => 'octubre',
+            11 => 'noviembre',
+            12 => 'diciembre',
+        ];
+
+        $inicio = \Carbon\Carbon::parse($fechaInicio);
+        $fin    = \Carbon\Carbon::parse($fechaFin);
+
+        // Cantidad de días (inclusivo: del 29 al 31 son 3 días)
+        $cantDias = $inicio->diffInDays($fin) + 1;
+        $cantDiasTxt = $this->numeroALetras($cantDias) . " ({$cantDias})";
+
+        $diaIni  = (int) $inicio->day;
+        $mesIni  = (int) $inicio->month;
+        $anioIni = (int) $inicio->year;
+
+        $diaFin  = (int) $fin->day;
+        $mesFin  = (int) $fin->month;
+        $anioFin = (int) $fin->year;
+
+        $diaIniTxt  = $this->numeroALetras($diaIni)  . " ({$diaIni})";
+        $diaFinTxt  = $this->numeroALetras($diaFin)  . " ({$diaFin})";
+        $anioIniTxt = $this->numeroALetras($anioIni) . " ({$anioIni})";
+        $anioFinTxt = $this->numeroALetras($anioFin) . " ({$anioFin})";
+
+        // Caso 1: un solo día
+        if ($inicio->isSameDay($fin)) {
+            return "un (1) día, correspondiente al {$diaIniTxt} de {$meses[$mesIni]} de {$anioIniTxt}";
+        }
+
+        // Caso 2: mismo mes y mismo año
+        if ($mesIni === $mesFin && $anioIni === $anioFin) {
+            return "{$cantDiasTxt} días, comprendidos entre el {$diaIniTxt} y el {$diaFinTxt} de {$meses[$mesIni]} de {$anioIniTxt}";
+        }
+
+        // Caso 3: distinto mes, mismo año
+        if ($anioIni === $anioFin) {
+            return "{$cantDiasTxt} días, comprendidos entre el {$diaIniTxt} de {$meses[$mesIni]} y el {$diaFinTxt} de {$meses[$mesFin]} de {$anioIniTxt}";
+        }
+
+        // Caso 4: distinto año
+        return "{$cantDiasTxt} días, comprendidos entre el {$diaIniTxt} de {$meses[$mesIni]} de {$anioIniTxt} y el {$diaFinTxt} de {$meses[$mesFin]} de {$anioFinTxt}";
+    }
 
     public function generarWord(Contrato $contrato)
     {
@@ -225,9 +437,8 @@ class ContratoController extends Controller
             $templateProcessor->setValue('OBJETO_DEL_CONTRATO', $contrato->objeto ?? '');
             $templateProcessor->setValue('ALCANCE_DEL_OBJETO', trim($alcanceTexto)); // trim para quitar el último salto de línea
 
-            $templateProcessor->setValue('FECHA_DE_INICIO', $contrato->fecha_inicio ? $contrato->fecha_inicio->format('d/m/Y') : 'N/A');
-            $templateProcessor->setValue('FECHA_DE_TERMINACION', $contrato->fecha_fin ? $contrato->fecha_fin->format('d/m/Y') : 'N/A');
-            $templateProcessor->setValue('DURACION_TOTAL_DEL_CONTRATO', $contrato->duracion ?? 'N/A');
+            $templateProcessor->setValue('PERIODO_EJECUCION', $this->generarTextoPeriodo($contrato->fecha_inicio, $contrato->fecha_fin));
+            $templateProcessor->setValue('DURACION_CONTRATO', $this->generarTextoDuracion($contrato->fecha_inicio, $contrato->fecha_fin));
             $templateProcessor->setValue('PUBLICO_AL_CUAL_SE_DIRIGE', $contrato->publico ?? 'N/A');
             $templateProcessor->setValue('SUPERVISOR_DEL_CONTRATO', $contrato->supervisor ?? '');
 
@@ -285,9 +496,8 @@ class ContratoController extends Controller
         $templateProcessor->setValue('CORREO_ELECTRONICO', $contrato->email);
         $templateProcessor->setValue('OBJETO_DEL_CONTRATO', $contrato->objeto);
         $templateProcessor->setValue('ALCANCE_DEL_OBJETO', trim($alcanceTexto));
-        $templateProcessor->setValue('FECHA_DE_INICIO', $contrato->fecha_inicio->format('d/m/Y'));
-        $templateProcessor->setValue('FECHA_DE_TERMINACION', $contrato->fecha_fin->format('d/m/Y'));
-        $templateProcessor->setValue('DURACION_TOTAL_DEL_CONTRATO', $contrato->duracion);
+        $templateProcessor->setValue('PERIODO_EJECUCION', $this->generarTextoPeriodo($contrato->fecha_inicio, $contrato->fecha_fin));
+        $templateProcessor->setValue('DURACION_CONTRATO', $this->generarTextoDuracion($contrato->fecha_inicio, $contrato->fecha_fin));
         $templateProcessor->setValue('PUBLICO_AL_CUAL_SE_DIRIGE', $contrato->publico);
         $templateProcessor->setValue('SUPERVISOR_DEL_CONTRATO', $contrato->supervisor);
         $templateProcessor->setValue('VALOR_DEL_CONTRATO', number_format($contrato->valor_total, 2, ',', '.'));
